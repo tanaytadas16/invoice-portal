@@ -6,6 +6,7 @@ import {
     getInvoiceById,
     getAllSuppliers,
 } from "./dataFunction.js";
+import { Invoice, Supplier } from "./invoiceModel.js";
 import cors from "cors";
 
 const app = express();
@@ -16,7 +17,7 @@ app.use(express.json());
 app.get("/api", (req, res) => {
     res.send("Hello, Navigate to appropriate API endpoint");
 });
-// Create an invoice (POST request)
+
 app.post("/api/invoices", async (req, res) => {
     try {
         const newInvoice = await createInvoice(req.body);
@@ -31,13 +32,11 @@ app.get("/api/suppliers", async (req, res) => {
     res.status(200).json(allSuppliers);
 });
 
-// Get all invoices (GET request)
 app.get("/api/invoices", async (req, res) => {
     const allInvoices = await getAllInvoices();
     res.status(200).json(allInvoices);
 });
 
-// Get a specific invoice by ID (GET request)
 app.get("/api/invoices/:invNum", async (req, res) => {
     const invNum = req.params.invNum;
     const InvoiceById = await getInvoiceById(invNum);
@@ -49,24 +48,19 @@ app.get("/api/invoices/:invNum", async (req, res) => {
     res.status(200).json(InvoiceById);
 });
 
-app.put("/api/invoiceResponse/:id", async (req, res) => {
-    const { id } = req.params;
-    const { status, empResponse } = req.body;
-
+app.put("/api/invoiceResponse", async (req, res) => {
     try {
-        // Find the invoice by ID in the database
-        const invoice = await Invoice.findById(id);
+        const { invoiceId, decision } = req.body;
+        // console.log("From supp API", invoiceId, decision);
+        const invoice = await Invoice.findOne({ InvNum: invoiceId });
 
         if (!invoice) {
             return res.status(404).json({ error: "Invoice not found" });
         }
 
-        // Update the status and employee response
-        invoice.invoiceStatus = status;
-        invoice.employeeResponse = empResponse;
-
-        // Save the updated invoice to the database
+        invoice.InvoiceStatus = decision;
         const updatedInvoice = await invoice.save();
+        console.log("Company Decision Updated Successfully!");
 
         return res.status(200).json(updatedInvoice);
     } catch (error) {

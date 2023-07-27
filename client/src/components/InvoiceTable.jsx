@@ -2,9 +2,28 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const InvoiceTable = ({ invoice }) => {
+    const getStatusColor = (status) => {
+        switch (status) {
+            case "Paid":
+                return "green";
+                break;
+            case "Approved":
+                return "indigo";
+                break;
+            case "Declined":
+                return "red";
+                break;
+            case "Reconcile":
+                return "yellow";
+                break;
+            default:
+                return "gray";
+                break;
+        }
+    };
     return (
         <tbody className="text-gray-600 text-sm font-light">
-            <tr className="border-b border-gray-200 hover:bg-gray-100">
+            <tr className="border border-gray-200 hover:bg-gray-100">
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex items-center">
                         <span className="font-medium">
@@ -28,9 +47,9 @@ const InvoiceTable = ({ invoice }) => {
 
                 <td className="py-3 px-6 text-center">
                     <span
-                        className={`bg-${
-                            invoice.InvoiceStatus === "Paid" ? "green" : "red"
-                        }-200 text-black-600 py-1 px-3 rounded-full text-xs`}
+                        className={`bg-${getStatusColor(
+                            invoice.InvoiceStatus
+                        )}-200 text-black-600 py-1 px-3 rounded-full text-xs`}
                     >
                         {invoice.InvoiceStatus}
                     </span>

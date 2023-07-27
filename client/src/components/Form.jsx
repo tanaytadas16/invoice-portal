@@ -30,9 +30,6 @@ const Form = () => {
             }
         }
         getSuppliersName();
-        // return () => {
-        //     second;
-        // };
     }, []);
 
     const handleSubmit = async (e) => {
@@ -52,7 +49,7 @@ const Form = () => {
             if (response) {
                 resetContext();
                 const sendInvoice = await axios
-                    .post("https://eo8w4jk4lyfkl.m.pipedream.net", combinedData)
+                    .post("http://localhost:8080/api/invoices", combinedData)
                     .then(console.log("Data sent to company"));
             }
         } catch (error) {
@@ -81,6 +78,7 @@ const Form = () => {
                             </div>
                         </div>
                     </div>
+
                     <div className="my-4 mr-7 object-contain relative w-screen h-auto border border-gray-700 max-w-none shadow-lg bg-slate-50 overflow-x-auto">
                         <Table />
                     </div>

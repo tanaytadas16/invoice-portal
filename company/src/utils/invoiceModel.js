@@ -1,15 +1,6 @@
 import mongoose from "mongoose";
 const { Schema, models, model } = mongoose;
 
-const supplierSchema = new mongoose.Schema({
-    S_SupNum: { type: String, required: true, unique: true },
-    S_SuppName: { type: String, required: true },
-    S_CorpAddr: { type: String, required: true },
-    S_RemitAdd: { type: String },
-    S_Email: { type: String },
-    S_Phone: { type: String },
-    isInvoicingCompany: { type: Boolean },
-});
 const invoiceItemSchema = new mongoose.Schema({
     InvItemNum: { type: Number, required: true },
     ProdType: { type: String, required: true, enum: ["Material", "Service"] },
@@ -59,6 +50,7 @@ const invoiceSchema = new mongoose.Schema({
         grossTotal: { type: Number, default: 0 },
     },
 });
+
 invoiceSchema.pre("create", function (next) {
     // Calculate the due date based on the invoice date and payment term
     const { invoiceDate, paymentTerm } = this;
@@ -67,18 +59,7 @@ invoiceSchema.pre("create", function (next) {
     dueDate.setDate(dueDate.getDate() + paymentTermInDays);
     this.dueDate = dueDate;
 
-    // Update the status based on the current date and due date
-    const currentDate = new Date();
-    if (currentDate > dueDate) {
-        this.InvoiceStatus = "Overdue";
-    } else if (currentDate === dueDate) {
-        this.InvoiceStatus = "Pending";
-    } else {
-        this.InvoiceStatus = "Paid";
-    }
-
     next();
 });
 
 export const Invoice = models.Invoice || model("Invoice", invoiceSchema);
-export const Supplier = models.Supplier || model("Supplier", supplierSchema);

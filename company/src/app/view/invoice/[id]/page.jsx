@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useInvoiceContext } from "../context/InvoiceContext";
 import { useReactToPrint } from "react-to-print";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import IconButton from "@mui/material/IconButton";
@@ -61,20 +62,13 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
                     )}
 
                     {selectedSupplier && (
-                        <div className="w-1/2 p-8">
-                            <h3 className="font-medium mb-2">Ship to:</h3>
-                            <p className="text-sm ">
+                        <div className="w-1/2  p-8">
+                            <h3 className="font-medium mb-2">Bill to:</h3>
+                            <p className="text-sm mb-1">
                                 {selectedSupplier.S_SuppName}
                             </p>
                             <p className="text-sm mb-1">
                                 {selectedSupplier.S_CorpAddr}
-                            </p>
-                            <h3 className="font-medium mt-5">Bill to:</h3>
-                            <p className="text-sm mb-1">
-                                {selectedSupplier.S_SuppName}
-                            </p>
-                            <p className="text-sm mb-1">
-                                {selectedSupplier.S_RemitAdd}
                             </p>
                         </div>
                     )}

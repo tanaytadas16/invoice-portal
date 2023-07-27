@@ -44,8 +44,9 @@ const FormHeaders = ({ suppliers }) => {
                     onChange={handleChange}
                 >
                     <option value="Draft">Select a Status</option>
-                    <option value="Outstanding">Outstanding</option>
-                    <option value="Unpaid">Unpaid</option>
+                    <option value="Submitted">Submitted</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Declined">Declined</option>
                     <option value="Paid">Paid</option>
                     <option value="Reconcile">Reconcile</option>
                 </select>
