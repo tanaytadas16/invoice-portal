@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import "./../App.css";
-// import invoiceList from "../data/data.js";
-// import InvoiceForm from "./InvoiceForm";
 import InvoiceTable from "./InvoiceTable";
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
@@ -29,15 +26,15 @@ export const InvoiceList = () => {
         fetchInvoices();
     }, []);
 
-    // Function to handle the click on an invoice to view it in preview mode
-    const handleViewInvoice = (invoice) => {
-        setSelectedInvoice(invoice);
-    };
+    // // Function to handle the click on an invoice to view it in preview mode
+    // const handleViewInvoice = (invoice) => {
+    //     setSelectedInvoice(invoice);
+    // };
 
-    // Function to close the invoice preview mode
-    const handleClosePreview = () => {
-        setSelectedInvoice(null);
-    };
+    // // Function to close the invoice preview mode
+    // const handleClosePreview = () => {
+    //     setSelectedInvoice(null);
+    // };
 
     if (loading) {
         return <Loading />;
